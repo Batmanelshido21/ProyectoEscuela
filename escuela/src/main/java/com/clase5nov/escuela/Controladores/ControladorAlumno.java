@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.clase5nov.escuela.Modelos.Alumno;
 import com.clase5nov.escuela.Servicios.ServicioAlumno;
@@ -47,4 +49,10 @@ public class ControladorAlumno {
     public boolean eliminarAlumno(@PathVariable String matricula) {
         return servicioAlumno.eliminarAlumno(matricula);
     }
+
+    @PostMapping("/guardarImagen")
+    public boolean guardarImagen(@RequestParam MultipartFile foto){
+        return servicioAlumno.guardarImagen(foto);
+    }
+
 }

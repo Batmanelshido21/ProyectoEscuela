@@ -1,11 +1,16 @@
 package com.clase5nov.escuela.Servicios;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.clase5nov.escuela.Modelos.Alumno;
 import com.clase5nov.escuela.Repositorios.RepositorioAlumno;
@@ -23,7 +28,7 @@ public class ServicioAlumno {
     }
 
     public List<Alumno> obtenerAlumnos() {
-        return repositorioAlumno.findAll();
+        return (List<Alumno>) repositorioAlumno.findAll();
     }
 
     public Optional<Alumno> obtenerAlumnoPorMatricula(String matricula) {
@@ -49,6 +54,22 @@ public class ServicioAlumno {
         } else {
             return false;
         }
+    }
+
+    @Transactional
+    public boolean guardarImagen(MultipartFile foto){
+        if(!foto.isEmpty()){
+            String ruta = "C:/Users/javier.juarez/Documents/Imagenesdeprueba";
+            try{
+                byte[] bytes = foto.getBytes();
+                Path rutaAbsoluta = Paths.get(ruta+"//"+foto.getOriginalFilename());
+                Files.write(rutaAbsoluta,bytes);
+                return true;
+            }catch(Exception e){
+                System.out.println(e);
+            }
+        }
+        return false;
     }
 
 }
